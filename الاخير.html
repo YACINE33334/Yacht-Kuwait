@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YachtLux - اكتشف عالم الفخامة</title>
+    <style>
+        /* الخطوط والألوان الأساسية */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Great+Vibes:wght@400&display=swap');
+        
+        :root {
+            --primary-color: #0A192F; /* أزرق داكن */
+            --secondary-color: #0077B6; /* أزرق بحري */
+            --text-light: #F0F4F8; /* أبيض */
+            --text-dark: #333333; /* رمادي */
+            --accent-color: #E58F9A; /* وردي فاخر */
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            direction: rtl;
+        }
+
+        /* شريط التنقل */
+        .navbar {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            padding: 15px 50px;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1), 0 5px 15px -5px var(--accent-color); 
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000000;
+            text-decoration: none;
+            letter-spacing: 1px;
+            order: 2; 
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            order: 1; 
+        }
+
+        .nav-links li {
+            margin-left: 30px; 
+            margin-right: 0;
+            position: relative; 
+        }
+        
+        .nav-links li:last-child {
+            margin-left: 0;
+        }
+
+        .nav-links a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+            display: block; 
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* القوائم المنسدلة */
+        .dropdown {
+            position: absolute;
+            top: 100%; 
+            left: 0; 
+            right: auto; 
+            width: 250px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .contact-dropdown .dropdown-email {
+            font-weight: 700;
+            color: var(--primary-color); 
+            font-size: 14px;
+            display: block;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .dropdown-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .dropdown-button:hover {
+            background-color: var(--primary-color); 
+            color: var(--text-light); 
+            transform: scale(1);
+            border-color: var(--primary-color);
+        }
+        
+        .services-dropdown p {
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .services-dropdown .domain-sale {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-top: 10px;
+            display: block;
+        }
+
+        .language-dropdown {
+            width: 160px;
+            padding: 5px 0;
+        }
+        
+        .language-dropdown a {
+            display: block;
+            padding: 10px 15px;
+            text-align: right;
+            color: var(--primary-color);
+            transition: background-color 0.2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .language-dropdown a:hover {
+            background-color: #f0f0f0;
+            color: var(--accent-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end; 
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden; 
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            object-fit: cover; 
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px 40px; 
+            max-width: 600px;
+            margin-left: 0; 
+            margin-right: 80px; 
+            text-align: right; 
+            border-radius: 10px;
+        }
+
+        .elegant-text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .text-line {
+            display: block;
+            font-weight: 700;
+            color: var(--text-light);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            opacity: 0; 
+            transform: translateX(30px); 
+            animation: slideInRTL 1.5s forwards;
+            line-height: 1.2;
+            transition: opacity 1s ease-out; 
+        }
+
+        .faded-out {
+            opacity: 0 !important;
+        }
+        
+        .line-1 {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            animation-delay: 0.5s;
+            text-shadow: none; 
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .line-2 {
+            font-family: 'Great Vibes', cursive; 
+            font-size: 64px;
+            color: var(--accent-color); 
+            animation-delay: 1.0s;
+            text-shadow: 
+                0 0 5px var(--accent-color), 
+                0 0 10px var(--accent-color), 
+                0 0 20px rgba(229, 143, 154, 0.7); 
+        }
+        
+        @keyframes slideInRTL {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .contact-email-section {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 50px;
+            display: block;
+        }
+
+        .content-section h2 {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .content-section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 10px auto 30px;
+        }
+
+        .video-showcase {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+            padding: 0 50px;
+        }
+        
+        .video-item {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s;
+        }
+        
+        .video-item video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        /* --- شريط البورصة المتحرك --- */
+        .ticker-tape {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            overflow: hidden;
+            padding: 15px 0;
+            white-space: nowrap;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Cairo', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 40px;
+            width: 100%;
+            direction: ltr; 
+        }
+
+        .ticker-content {
+            display: inline-block;
+            width: max-content; 
+            padding: 0;
+            box-sizing: content-box; 
+            animation: ticker-move 120s linear infinite; 
+        }
+
+        .ticker-content span {
+            display: inline-block;
+            margin-right: 30px;
+            padding: 0 10px;
+        }
+        
+        .ticker-content span::before {
+            content: ' | ';
+            margin-right: 15px;
+            color: var(--text-light); 
+        }
+        
+        @keyframes ticker-move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
+        }
+
+        /* رسالة تنبيه الصوت */
+        .audio-prompt {
+            position: fixed;
+            top: 60%;
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background-color: transparent; 
+            color: rgba(255, 255, 255, 0.75);
+            padding: 10px 15px;
+            border-radius: 0;
+            z-index: 10000;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s;
+            border: none;
+            box-shadow: none; 
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <a href="#" class="logo">Yacht Kuwait</a>
+        <ul class="nav-links">
+            <!-- تم حذف عنصر الصفحة الرئيسية (الرئيسية) -->
+            
+            <li id="servicesDropdownContainer">
+                <a href="#" id="openServicesDropdown" class="translatable" data-ar="الخدمات" data-en="Services">الخدمات</a>
+                <div id="servicesDropdown" class="dropdown services-dropdown">
+                    <p class="translatable" data-ar="عذرًا، لا توجد خدمات متاحة حاليًا." data-en="Sorry, no services are currently available.">عذرًا، لا توجد خدمات متاحة حاليًا.</p>
+                    <span class="domain-sale translatable" data-ar="هذا الدومين معروض للبيع." data-en="This domain is for sale.">هذا الدومين معروض للبيع.</span>
+                </div>
+            </li>
+            
+            <li id="contactDropdownContainer">
+                <a href="#" id="openContactDropdown" class="translatable" data-ar="اتصل بنا" data-en="Contact Us">اتصل بنا</a>
+                <div id="contactDropdown" class="dropdown contact-dropdown">
+                    <p style="margin-top: 0; color: var(--text-dark); font-size: 14px;" class="translatable" data-ar="تواصل معنا عبر البريد:" data-en="Contact us via email:">تواصل معنا عبر البريد:</p>
+                    <span class="dropdown-email">ys.yacine.siousiou@gmail.com</span>
+                    <a href="mailto:ys.yacine.siousiou@gmail.com?subject=استفسار%20من%20موقع%20YachtLux" 
+                       class="dropdown-button translatable" data-ar="اتصل الآن" data-en="Contact Now">
+                       اتصل الآن
+                    </a>
+                </div>
+            </li>
+
+            <li id="languageDropdownContainer">
+                <a href="#" id="openLanguageDropdown">
+                    <span class="translatable" data-ar="اللغة" data-en="Language">اللغة</span> 
+                </a>
+                <div id="languageDropdown" class="dropdown language-dropdown">
+                    <!-- تم حذف الإيموجي من هنا -->
+                    <a href="#" class="lang-option" data-lang="ar">العربية</a>
+                    <a href="#" class="lang-option" data-lang="en">English</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+        <video autoplay loop muted id="bg-video"> 
+            <source src="GGUN/Majesty-100-terrace.mp4" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو في الخلفية.
+        </video>
+        <div class="hero-content">
+            <div class="elegant-text-container">
+                <span class="text-line line-1 translatable" data-ar="مرحباً بك في" data-en="Welcome To">مرحباً بك في</span>
+                <span class="text-line line-2">Yacht Kuwait</span>
+            </div>
+        </div>
+    </header>
+    
+    <div id="audioPrompt" class="audio-prompt translatable" data-ar="انقر في أي مكان لتشغيل صوت الفيديو!" data-en="Click anywhere to unmute the video!">
+        انقر في أي مكان لتشغيل صوت صوت الفيديو!
+    </div>
+
+    <section class="content-section">
+        <h2 style="color: var(--primary-color);" class="translatable" data-ar="عروض اليخوت الحصرية" data-en="Exclusive Yacht Offers">عروض اليخوت الحصرية</h2>
+        <p class="contact-email-section">
+            <span style="color: var(--accent-color);" class="translatable" data-ar="ملاحظة: هذا الدومين متاح للبيع." data-en="Note: This domain is available for sale.">ملاحظة: هذا الدومين متاح للبيع.</span><br>
+            <span style="color: var(--primary-color);" class="translatable" data-ar="للتواصل والاستفسار، يرجى إرسال بريد إلكتروني إلى: " data-en="For inquiries, please email: ">للتواصل والاستفسار، يرجى إرسال بريد إلكتروني إلى: </span> 
+            <a href="mailto:ys.yacine.siousiou@gmail.com" style="color: var(--accent-color); text-decoration: none;">ys.yacine.siousiou@gmail.com</a>
+        </p>
+        
+        <div class="video-showcase">
+            <div class="video-item">
+                <video autoplay muted loop>
+                    <source src="GGUN/Bluegame-Horizontal-Promo-all-models-online.mp4" type="video/mp4">
+                    متصفحك لا يدعم هذا الفيديو.
+                </video>
+            </div>
+            <div class="video-item">
+                <video autoplay muted loop>
+                    <source src="GGUN/Superyacht-home-desktop-2.mp4" type="video/mp4">
+                    متصفحك لا يدعم هذا الفيديو.
+                </video>
+            </div>
+        </div>
+        
+        <div class="ticker-tape">
+            <div class="ticker-content" id="tickerContent">
+                <span class="ticker-item" data-ar="مناسب لبائعي اليخوت الفاخرة: عزز تواجدك الرقمي الآن!" data-en="Suitable for luxury yacht sellers: boost your digital presence now!">مناسب لبائعي اليخوت الفاخرة: عزز تواجدك الرقمي الآن!</span>
+                <span class="ticker-item" data-ar="بوابة مثالية لوكالات تأجير اليخوت: ابدأ رحلتك نحو النجاح." data-en="Ideal gateway for yacht charter agencies: start your journey to success.">بوابة مثالية لوكالات تأجير اليخوت: ابدأ رحلتك نحو النجاح.</span>
+                <span class="ticker-item" data-ar="اسم دومين احترافي لخدمات صيانة وإدارة اليخوت في الكويت." data-en="Professional domain name for yacht maintenance and management services in Kuwait.">اسم دومين احترافي لخدمات صيانة وإدارة اليخوت في الكويت.</span>
+                <span class="ticker-item" data-ar="استحوذ على سوق اليخوت الكويتي: yachtkw.com هو مفتاحك!" data-en="Capture the Kuwaiti yacht market: yachtkw.com is your key!">استحوذ على سوق اليخوت الكويتي: yachtkw.com هو مفتاحك!</span>
+                <span class="ticker-item" data-ar="فرصة استثمارية ذهبية: yachtkw.com يُعرض للبيع الآن!" data-en="Golden investment opportunity: yachtkw.com is for sale now!">فرصة استثمارية ذهبية: yachtkw.com يُعرض للبيع الآن!</span>
+                <span class="ticker-item" data-ar="اسم دومين لا يُنسى لفعاليات ومعارض اليخوت في الكويت." data-en="An unforgettable domain name for yacht events and exhibitions in Kuwait.">اسم دومين لا يُنسى لفعاليات ومعارض اليخوت في الكويت.</span>
+                <span class="ticker-item" data-ar="yachtkw.com - لأنه اسمك هو علامتك التجارية." data-en="yachtkw.com - because your name is your brand.">yachtkw.com - لأنه اسمك هو علامتك التجارية.</span>
+                <span class="ticker-item" data-ar="تواصل مع جمهورك المستهدف مباشرة في الكويت." data-en="Communicate directly with your target audience in Kuwait.">تواصل مع جمهورك المستهدف مباشرة في الكويت.</span>
+                <span class="ticker-item" data-ar="استحوذ على انتباه الباحثين عن اليخوت في الخليج." data-en="Capture the attention of yacht seekers in the Gulf.">استحوذ على انتباه الباحثين عن اليخوت في الخليج.</span>
+                <span class="ticker-item" data-ar="امتلك المرجع الأول لليخوت في الكويت." data-en="Own the primary reference for yachts in Kuwait.">امتلك المرجع الأول لليخوت في الكويت.</span>
+                <span class="ticker-item" data-ar="بناء علامتك التجارية لليخوت يبدأ بدومين استثنائي." data-en="Building your yacht brand starts with an exceptional domain.">بناء علامتك التجارية لليخوت يبدأ بدومين استثنائي.</span>
+                <span class="ticker-item" data-ar="اجذب العملاء المميزين: yachtkw.com يضعك في الصدارة." data-en="Attract premium clients: yachtkw.com puts you in the lead.">اجذب العملاء المميزين: yachtkw.com يضعك في الصدارة.</span>
+                
+                <!-- المحتوى المكرر -->
+                <span class="ticker-item" data-ar="مناسب لبائعي اليخوت الفاخرة: عزز تواجدك الرقمي الآن!" data-en="Suitable for luxury yacht sellers: boost your digital presence now!">مناسب لبائعي اليخوت الفاخرة: عزز تواجدك الرقمي الآن!</span>
+                <span class="ticker-item" data-ar="بوابة مثالية لوكالات تأجير اليخوت: ابدأ رحلتك نحو النجاح." data-en="Ideal gateway for yacht charter agencies: start your journey to success.">بوابة مثالية لوكالات تأجير اليخوت: ابدأ رحلتك نحو النجاح.</span>
+                <span class="ticker-item" data-ar="اسم دومين احترافي لخدمات صيانة وإدارة اليخوت في الكويت." data-en="Professional domain name for yacht maintenance and management services in Kuwait.">اسم دومين احترافي لخدمات صيانة وإدارة اليخوت في الكويت.</span>
+                <span class="ticker-item" data-ar="استحوذ على سوق اليخوت الكويتي: yachtkw.com هو مفتاحك!" data-en="Capture the Kuwaiti yacht market: yachtkw.com is your key!">استحوذ على سوق اليخوت الكويتي: yachtkw.com هو مفتاحك!</span>
+                <span class="ticker-item" data-ar="فرصة استثمارية ذهبية: yachtkw.com يُعرض للبيع الآن!" data-en="Golden investment opportunity: yachtkw.com is for sale now!">فرصة استثمارية ذهبية: yachtkw.com يُعرض للبيع الآن!</span>
+                <span class="ticker-item" data-ar="اسم دومين لا يُنسى لفعاليات ومعارض اليخوت في الكويت." data-en="An unforgettable domain name for yacht events and exhibitions in Kuwait.">اسم دومين لا يُنسى لفعاليات ومعارض اليخوت في الكويت.</span>
+                <span class="ticker-item" data-ar="yachtkw.com - لأنه اسمك هو علامتك التجارية." data-en="yachtkw.com - because your name is your brand.">yachtkw.com - لأنه اسمك هو علامتك التجارية.</span>
+                <span class="ticker-item" data-ar="تواصل مع جمهورك المستهدف مباشرة في الكويت." data-en="Communicate directly with your target audience in Kuwait.">تواصل مع جمهورك المستهدف مباشرة في الكويت.</span>
+                <span class="ticker-item" data-ar="استحوذ على انتباه الباحثين عن اليخوت في الخليج." data-en="Capture the attention of yacht seekers in the Gulf.">استحوذ على انتباه الباحثين عن اليخوت في الخليج.</span>
+                <span class="ticker-item" data-ar="امتلك المرجع الأول لليخوت في الكويت." data-en="Own the primary reference for yachts in Kuwait.">امتلك المرجع الأول لليخوت في الكويت.</span>
+                <span class="ticker-item" data-ar="بناء علامتك التجارية لليخوت يبدأ بدومين استثنائي." data-en="Building your yacht brand starts with an exceptional domain.">بناء علامتك التجارية لليخوت يبدأ بدومين استثنائي.</span>
+                <span class="ticker-item" data-ar="اجذب العملاء المميزين: yachtkw.com يضعك في الصدارة." data-en="Attract premium clients: yachtkw.com puts you in the lead.">اجذب العملاء المميزين: yachtkw.com يضعك في الصدارة.</span>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer translatable" data-ar="© 2025 YachtLux. جميع الحقوق محفوظة." data-en="© 2025 YachtLux. All Rights Reserved.">
+        <p>© 2025 YachtLux. جميع الحقوق محفوظة.</p>
+    </footer>
+    
+    <script>
+        function setLanguage(lang) {
+            const body = document.querySelector('body');
+            const html = document.querySelector('html');
+            const logo = document.querySelector('.logo');
+            
+            // تم إزالة تغيير الاتجاه (dir) واللغة (lang) لمنع "قلب" الصفحة
+            // ستبقى الصفحة دائماً RTL ولكن النصوص ستتغير
+            
+            if (lang === 'ar') {
+                // html.setAttribute('dir', 'rtl'); // تم التعطيل
+                // html.setAttribute('lang', 'ar'); // تم التعطيل
+                document.getElementById('openLanguageDropdown').querySelector('span').textContent = 'اللغة';
+            } else {
+                // html.setAttribute('dir', 'ltr'); // تم التعطيل
+                // html.setAttribute('lang', 'en'); // تم التعطيل
+                document.getElementById('openLanguageDropdown').querySelector('span').textContent = 'Language';
+            }
+
+            document.querySelectorAll('[data-ar]').forEach(element => {
+                const arText = element.getAttribute('data-ar');
+                const enText = element.getAttribute('data-en');
+                if (lang === 'ar') {
+                    if (element.classList.contains('line-2')) return; 
+                    element.textContent = arText;
+                } else {
+                    if (element.classList.contains('line-2')) return; 
+                    element.textContent = enText;
+                }
+            });
+        }
+        
+        const enableAudio = () => {
+            const bgVideo = document.getElementById('bg-video');
+            const audioPrompt = document.getElementById('audioPrompt');
+            if (bgVideo && bgVideo.muted) {
+                bgVideo.muted = false; 
+                audioPrompt.style.opacity = '0';
+                audioPrompt.style.visibility = 'hidden';
+                document.removeEventListener('click', enableAudio);
+            }
+        };
+
+        const closeAllDropdowns = () => {
+            const contactDropdown = document.getElementById('contactDropdown');
+            const servicesDropdown = document.getElementById('servicesDropdown');
+            const languageDropdown = document.getElementById('languageDropdown');
+            contactDropdown.classList.remove('open');
+            servicesDropdown.classList.remove('open');
+            languageDropdown.classList.remove('open'); 
+        };
+        
+        // --- مراقب التمرير (Intersection Observer) ---
+        const observerOptions = {
+            root: null,
+            threshold: 0.15,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // تشغيل الحركة مرة واحدة فقط
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage('ar'); 
+
+            // تفعيل مراقب التمرير للعناصر التي تحمل كلاس reveal
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            const contactContainer = document.getElementById('contactDropdownContainer');
+            const openContactBtn = document.getElementById('openContactDropdown');
+            const servicesContainer = document.getElementById('servicesDropdownContainer');
+            const openServicesBtn = document.getElementById('openServicesDropdown');
+            const languageContainer = document.getElementById('languageDropdownContainer');
+            const openLanguageBtn = document.getElementById('openLanguageDropdown');
+
+            openContactBtn.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                const contactDropdown = document.getElementById('contactDropdown');
+                if (!contactDropdown.classList.contains('open')) closeAllDropdowns();
+                contactDropdown.classList.toggle('open');
+            });
+            
+            openServicesBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const servicesDropdown = document.getElementById('servicesDropdown');
+                if (!servicesDropdown.classList.contains('open')) closeAllDropdowns();
+                servicesDropdown.classList.toggle('open');
+            });
+            
+            openLanguageBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const languageDropdown = document.getElementById('languageDropdown');
+                if (!languageDropdown.classList.contains('open')) closeAllDropdowns();
+                languageDropdown.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                const isContactClick = contactContainer.contains(e.target);
+                const isServicesClick = servicesContainer.contains(e.target);
+                const isLanguageClick = languageContainer.contains(e.target); 
+                if (!isContactClick && !isServicesClick && !isLanguageClick) closeAllDropdowns();
+            });
+            
+            document.querySelectorAll('.lang-option').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = e.target.getAttribute('data-lang'); 
+                    setLanguage(lang);
+                    closeAllDropdowns(); 
+                });
+            });
+
+            const line1 = document.querySelector('.line-1');
+            if (line1) { 
+                setTimeout(() => { line1.classList.add('faded-out'); }, 15000); 
+            }
+            
+            const bgVideo = document.getElementById('bg-video');
+            const audioPrompt = document.getElementById('audioPrompt');
+            setTimeout(() => {
+                if (bgVideo.muted) { 
+                    audioPrompt.style.opacity = '1';
+                    audioPrompt.style.visibility = 'visible';
+                }
+            }, 3000); 
+
+            audioPrompt.addEventListener('click', enableAudio);
+            document.addEventListener('click', enableAudio);
+        });
+    </script>
+
+</body>
+</html>
