@@ -3,323 +3,1080 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yacht Kuwait - الفخامة البحرية</title>
+    <title>Private Yacht Charter - Yacht Kuwait</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bc-orange': '#ff5a00',
+                        'bc-dark': '#0f172a',
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        italiana: ['Italiana', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* استيراد الخطوط الفاخرة */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        body.lang-ar { font-family: 'Cairo', sans-serif; }
         
-        :root {
-            --primary-dark: #0b1c2c;   /* كحلي غامق */
-            --gold-accent: #d4af37;    /* ذهبي فاخر */
-            --white-text: #ffffff;
-            --light-gray: #f4f4f4;
-        }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--light-gray);
-            color: var(--primary-dark);
-            overflow-x: hidden;
-        }
+        .modal-overlay { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+        
+        /* Custom Checkbox */
+        .custom-checkbox { appearance: none; background-color: #fff; width: 1.15em; height: 1.15em; border: 2px solid #d1d5db; border-radius: 0.25em; display: grid; place-content: center; cursor: pointer; }
+        .custom-checkbox::before { content: ""; width: 0.65em; height: 0.65em; transform: scale(0); transition: 120ms transform ease-in-out; box-shadow: inset 1em 1em white; transform-origin: center; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
+        .custom-checkbox:checked { background-color: #0f172a; border-color: #0f172a; }
+        .custom-checkbox:checked::before { transform: scale(1); }
+        
+        /* Typography for Articles */
+        .article-body { font-family: 'Cairo', sans-serif; color: #334155; line-height: 2; font-size: 1.125rem; }
+        .article-body h2 { font-family: 'Cairo', sans-serif; font-weight: 800; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1.5rem; color: #0f172a; position: relative; }
+        .article-body h2::after { content: ''; display: block; width: 60px; height: 4px; background-color: #ff5a00; margin-top: 0.5rem; }
+        .article-body p { margin-bottom: 1.5rem; }
+        .article-body ul { list-style-type: none; padding: 0; margin-bottom: 2rem; background: #f8fafc; padding: 1.5rem; border-radius: 0.5rem; border-right: 4px solid #ff5a00; }
+        .article-body li { margin-bottom: 0.75rem; padding-right: 1.5rem; position: relative; }
+        .article-body li::before { content: "•"; color: #ff5a00; font-weight: bold; position: absolute; right: 0; }
+        .article-body blockquote { font-size: 1.5rem; font-family: 'Playfair Display', serif; font-style: italic; color: #ff5a00; text-align: center; margin: 3rem 0; line-height: 1.6; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 2rem 0; }
 
-        /* === شريط التنقل === */
-        .navbar {
-            background: rgba(11, 28, 44, 0.95);
-            padding: 15px 5% 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 90%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            color: var(--white-text);
-            text-decoration: none;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border-bottom: 2px solid var(--gold-accent);
-        }
-
-        .contact-btn {
-            background-color: var(--gold-accent);
-            color: var(--primary-dark);
-            padding: 10px 25px;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .contact-btn:hover {
-            background-color: var(--white-text);
-            color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* === القسم الرئيسي (Hero) === */
-        .hero {
-            height: 100vh;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--white-text);
-            position: relative;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            font-family: 'Playfair Display', serif;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-badge {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--gold-accent);
-            padding: 10px 20px;
-            display: inline-block;
-            margin-top: 20px;
-            color: var(--gold-accent);
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        /* === شريط الأخبار المتحرك === */
-        .ticker-wrap {
-            width: 100%;
-            background-color: var(--primary-dark);
-            color: var(--gold-accent);
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 12px 0;
-            border-top: 2px solid var(--gold-accent);
-            border-bottom: 2px solid var(--gold-accent);
-        }
-
-        .ticker {
-            display: inline-block;
-            animation: ticker 60s linear infinite;
-        }
-
-        .ticker-item {
-            display: inline-block;
-            padding: 0 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(100%, 0, 0); } /* تعديل الاتجاه للعربية */
-        }
-
-        /* === قسم المعرض === */
-        .gallery-section {
-            padding: 80px 10%;
-            text-align: center;
-            background: #fff;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            color: #666;
-            margin-bottom: 50px;
-            font-size: 1.1rem;
-        }
-
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            /* توسيط الكروت إذا كانت أقل من عرض الشاشة */
-            justify-content: center;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .card-body {
-            padding: 20px;
-            text-align: right;
-        }
-
-        .card-title {
-            color: var(--primary-dark);
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .card-text {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        /* === قسم التواصل === */
-        .contact-section {
-            background-color: var(--primary-dark);
-            color: var(--white-text);
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .email-box {
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
-            border: 1px solid var(--gold-accent);
-            display: inline-block;
-            margin-top: 20px;
-            border-radius: 4px;
-        }
-
-        .email-link {
-            color: var(--white-text);
-            font-size: 1.5rem;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-            transition: color 0.3s;
-        }
-
-        .email-link:hover {
-            color: var(--gold-accent);
-        }
-
-        /* الفوتر */
-        footer {
-            background: #000;
-            color: #888;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* تحسينات للموبايل */
-        @media (max-width: 768px) {
-            .navbar { padding: 15px 20px; width: calc(100% - 40px); }
-            .hero-content h1 { font-size: 2.5rem; }
-            .cards-container { grid-template-columns: 1fr; }
-            .email-link { font-size: 1.1rem; }
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body>
+<body class="text-slate-800 transition-all duration-300 lang-ar relative min-h-screen flex flex-col">
 
-    <!-- القائمة العلوية -->
-    <nav class="navbar">
-        <a href="#" class="logo">Yacht Kuwait</a>
-        <a href="mailto:ys.yacine.siousiou@gmail.com?subject=استفسار%20بخصوص%20Yacht%20Kuwait" class="contact-btn">اتصل بنا</a>
-    </nav>
+    <!-- Header -->
+    <header class="bg-bc-dark text-white py-4 px-6 sticky top-0 z-50 shadow-md">
+        <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showSection('yachts')">
+                <div class="relative w-12 h-12 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-bc-orange transition-transform duration-500 group-hover:rotate-6" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M50 10 C 50 10, 80 40, 80 70 C 80 85, 65 90, 50 90 C 35 90, 20 85, 20 70 C 20 40, 50 10, 50 10 Z" fill-opacity="0.3"/>
+                        <path d="M50 20 L50 85 M50 20 C 50 20, 70 50, 70 70 C 70 78, 60 82, 50 82" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="50" cy="50" r="2" fill="white"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl md:text-3xl font-normal tracking-wider leading-none font-italiana">YACHT KUWAIT</span>
+                    <span class="text-[10px] text-gray-400 tracking-[0.4em] uppercase mt-1">Luxury Charters</span>
+                </div>
+            </div>
 
-    <!-- القسم الرئيسي -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Yacht Kuwait</h1>
-            <p>الوجهة الأولى لعشاق الفخامة واليخوت في الكويت</p>
-            <div class="hero-badge">الدومين متاح للبيع الآن</div>
+            <!-- Navigation -->
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <div class="hidden md:flex items-center gap-4">
+                    <!-- MORE MENU -->
+                    <div class="relative group h-full flex items-center cursor-pointer">
+                        <span class="hover:text-gray-300 flex items-center gap-1 transition-colors px-3 py-2" data-i18n="nav_more">المزيد <i class="fa-solid fa-chevron-down text-[10px]"></i></span>
+                        <div class="hidden group-hover:block absolute top-full left-0 w-[400px] z-50 pt-2 transition-all duration-200">
+                            <div class="bg-white text-slate-800 shadow-xl rounded-lg py-4 px-2 border border-gray-100 ring-1 ring-black ring-opacity-5">
+                                <div class="grid grid-cols-1 gap-1" id="more-menu-links"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" onclick="showSection('articles')" class="hover:text-gray-300 flex items-center gap-1 transition-colors px-3 py-2" data-i18n="nav_articles">المقالات</a>
+                    <a href="#" onclick="showSection('yachts')" class="bg-bc-orange hover:bg-orange-600 text-white px-5 py-2 rounded font-semibold transition shadow-md shadow-orange-500/20" data-i18n="home">الرئيسية</a>
+                </div>
+
+                <!-- Right Side Actions -->
+                <div class="flex items-center gap-5 border-l border-slate-700 pl-5 ml-2">
+                    <div class="relative cursor-pointer text-gray-300 hover:text-white transition transform hover:scale-110 group/account" onclick="toggleAuthModal('login')">
+                        <i class="fa-regular fa-user text-xl"></i>
+                    </div>
+                    
+                    <!-- Currency -->
+                    <div class="relative group cursor-pointer h-full flex items-center py-2 hidden sm:flex">
+                        <div class="flex items-center gap-1 hover:text-gray-300 transition">
+                            <span id="current-currency-display">د.ك (KWD)</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </div>
+                        <div class="hidden group-hover:block absolute top-full right-0 w-full min-w-[140px] z-50 pt-2">
+                            <div class="bg-white text-slate-800 shadow-lg rounded py-2 text-left border border-gray-100">
+                                <a onclick="setCurrency('KWD')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">د.ك (KWD)</a>
+                                <a onclick="setCurrency('USD')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">USD ($)</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language -->
+                    <div class="relative group cursor-pointer flex items-center gap-1 py-2">
+                        <i class="fa-solid fa-globe text-gray-400"></i>
+                        <span id="current-lang-display" class="hover:text-gray-300 transition">العربية</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                         <div class="hidden group-hover:block absolute top-full right-0 w-full min-w-[120px] z-50 pt-2">
+                            <div class="bg-white text-slate-800 shadow-lg rounded py-2 text-left border border-gray-100">
+                                <a onclick="setLanguage('ar')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">العربية</a>
+                                <a onclick="setLanguage('en')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">English</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- الشريط المتحرك -->
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <div class="ticker-item">✨ فرصة استثمارية: هذا الدومين المميز YachtKw.com متاح للبيع الآن!</div>
-            <div class="ticker-item">⚓ الاسم المثالي لوكالات اليخوت والصيانة البحرية في الكويت.</div>
-            <div class="ticker-item">📧 للتواصل المباشر: ys.yacine.siousiou@gmail.com</div>
-            <div class="ticker-item">✨ فرصة استثمارية: هذا الدومين المميز YachtKw.com متاح للبيع الآن!</div>
-            <div class="ticker-item">⚓ الاسم المثالي لوكالات اليخوت والصيانة البحرية في الكويت.</div>
-            <div class="ticker-item">📧 للتواصل المباشر: ys.yacine.siousiou@gmail.com</div>
+    <!-- Banner -->
+    <div id="ad-banner" class="w-full h-[400px] relative overflow-hidden flex items-center justify-center text-center shadow-md group bg-gray-900">
+        <img id="banner-image-el" src="https://images.unsplash.com/photo-1540946485063-a40da27545f8?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 filter brightness-[0.6]">
+        <div class="relative z-10 flex flex-col items-center justify-center p-6">
+            <h2 id="banner-title-el" class="text-5xl md:text-8xl text-white font-normal mb-6 tracking-widest font-italiana drop-shadow-lg">YACHT KUWAIT</h2>
+            <div class="bg-white/10 backdrop-blur-md px-8 py-3 rounded-full border border-white/20 hover:bg-white/20 transition cursor-pointer">
+                <p id="banner-subtitle-el" class="text-xl md:text-2xl text-white font-medium drop-shadow-md" data-i18n="ad_space">مساحة إعلانية</p>
+            </div>
         </div>
     </div>
 
-    <!-- معرض اليخوت -->
-    <section class="gallery-section">
-        <h2 class="section-title">موديلات حصرية</h2>
-        <p class="section-subtitle">أمثلة على الفخامة التي يمكن أن يمثلها هذا الاسم التجاري</p>
+    <!-- Main Content -->
+    <main class="max-w-[1400px] mx-auto px-4 py-8 flex-grow w-full">
+        <!-- Breadcrumbs -->
+        <nav id="main-breadcrumbs" class="text-xs text-gray-500 mb-6 flex items-center gap-2">
+            <a href="#" onclick="showSection('yachts')" class="hover:text-bc-orange transition" data-i18n="home">الرئيسية</a>
+            <i class="fa-solid fa-chevron-left text-[8px]"></i>
+            <span class="text-gray-800 font-medium" id="breadcrumbs-text" data-i18n="breadcrumbs">تأجير يخوت في جزر تركس وكايكوس</span>
+        </nav>
 
-        <div class="cards-container">
-            <!-- كرت 1: Majesty 100 -->
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1540946485063-a40da27545f8?q=80&w=2070&auto=format&fit=crop" alt="Majesty 100" class="card-img">
-                <div class="card-body">
-                    <div class="card-title">Majesty 100 Terrace</div>
-                    <p class="card-text">قمة الفخامة البحرية. تصميم يجمع بين الأداء القوي والرفاهية المطلقة، مع مساحات مفتوحة تعانق البحر.</p>
+        <!-- YACHTS VIEW -->
+        <div id="view-yachts" class="fade-in">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 pb-4 border-b border-gray-200">
+                <h1 id="page-title-el" class="text-2xl md:text-[26px] font-bold text-slate-900" data-i18n="page_title">تأجير يخوت خاصة في جزر تركس وكايكوس – أفضل القوارب مع طاقم</h1>
+                <div class="relative">
+                    <select id="sort-select" onchange="applyFilters()" class="bg-white border border-gray-300 pl-4 pr-10 py-2.5 rounded-lg text-sm font-medium hover:border-bc-orange focus:border-bc-orange outline-none appearance-none cursor-pointer transition shadow-sm">
+                        <option value="featured" data-i18n="sort_featured">ترتيب حسب: مميز</option>
+                        <option value="price_low" data-i18n="sort_low">السعر: من الأقل للأعلى</option>
+                        <option value="price_high" data-i18n="sort_high">السعر: من الأعلى للأقل</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                 </div>
             </div>
 
-            <!-- كرت 2: Bluegame -->
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=2070&auto=format&fit=crop" alt="Bluegame Yacht" class="card-img">
-                <div class="card-body">
-                    <div class="card-title">Bluegame BGX Range</div>
-                    <p class="card-text">ثورة في عالم اليخوت. تصميم رياضي وجريء يناسب الباحثين عن المغامرة والتميز في مياه الخليج.</p>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar -->
+                <aside class="w-full lg:w-[280px] flex-shrink-0 space-y-4">
+                    <div class="bg-white rounded p-1.5 shadow-sm flex border border-gray-200 focus-within:ring-2 focus-within:ring-bc-orange/20 transition">
+                        <input type="text" id="location-search" value="Kuwait" class="w-full px-3 py-2 text-sm text-gray-700 outline-none rounded-r bg-transparent">
+                        <button onclick="applyFilters()" class="bg-bc-dark text-white px-5 py-2 rounded text-sm font-medium hover:bg-slate-800 transition" data-i18n="search_btn">بحث</button>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                            <h3 class="font-bold text-slate-800" data-i18n="filter_title">تصفية النتائج</h3>
+                            <button onclick="resetFilters()" class="text-xs text-bc-orange hover:text-orange-700 font-medium transition" data-i18n="reset">إعادة تعيين</button>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider" data-i18n="price_per">عرض السعر حسب</p>
+                            <div class="flex bg-gray-100 p-1 rounded-lg">
+                                <button id="price-day" onclick="setPriceType('day')" class="flex-1 py-1.5 text-sm font-bold rounded-md bg-white text-bc-orange shadow-sm transition" data-i18n="day">يوم</button>
+                                <button id="price-week" onclick="setPriceType('week')" class="flex-1 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 transition" data-i18n="week">أسبوع</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider" data-i18n="boat_type">نوع القارب</p>
+                            <div class="space-y-3" id="boat-type-filters">
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" value="Superyacht" class="custom-checkbox" checked onchange="applyFilters()">
+                                    <span class="text-sm font-medium text-slate-700 group-hover:text-bc-orange transition" data-i18n="filter_superyacht">يخت فاخر</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" value="Motor Yacht" class="custom-checkbox" checked onchange="applyFilters()">
+                                    <span class="text-sm font-medium text-slate-700 group-hover:text-bc-orange transition" data-i18n="filter_motoryacht">يخت بمحرك</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 pt-4 border-t border-gray-100">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-users text-gray-400 text-xs w-4"></i>
+                                    <span class="text-sm font-medium text-slate-700" data-i18n="guests_day">ضيوف (نهار)</span>
+                                </div>
+                                <div class="flex items-center gap-2 bg-gray-50 rounded-lg p-1">
+                                    <button onclick="updateCounter('guests-day', -1)" class="w-6 h-6 rounded bg-white shadow-sm text-gray-600 hover:text-bc-orange flex items-center justify-center text-sm font-bold transition">-</button>
+                                    <span id="guests-day-val" class="text-sm w-6 text-center font-bold text-slate-800">0</span>
+                                    <button onclick="updateCounter('guests-day', 1)" class="w-6 h-6 rounded bg-white shadow-sm text-gray-600 hover:text-bc-orange flex items-center justify-center text-sm font-bold transition">+</button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-bed text-gray-400 text-xs w-4"></i>
+                                    <span class="text-sm font-medium text-slate-700" data-i18n="guests_sleep">ضيوف (نوم)</span>
+                                </div>
+                                <div class="flex items-center gap-2 bg-gray-50 rounded-lg p-1">
+                                    <button onclick="updateCounter('guests-sleep', -1)" class="w-6 h-6 rounded bg-white shadow-sm text-gray-600 hover:text-bc-orange flex items-center justify-center text-sm font-bold transition">-</button>
+                                    <span id="guests-sleep-val" class="text-sm w-6 text-center font-bold text-slate-800">0</span>
+                                    <button onclick="updateCounter('guests-sleep', 1)" class="w-6 h-6 rounded bg-white shadow-sm text-gray-600 hover:text-bc-orange flex items-center justify-center text-sm font-bold transition">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Grid -->
+                <div class="flex-1">
+                    <div id="yacht-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Yachts will be rendered here -->
+                    </div>
+                    <div id="no-results" class="hidden flex flex-col items-center justify-center py-20 text-gray-400 bg-white rounded-xl border border-dashed border-gray-300 mt-4">
+                        <i class="fa-solid fa-sailboat text-5xl mb-4 text-gray-200"></i>
+                        <p data-i18n="no_results" class="font-medium">لا توجد نتائج مطابقة لبحثك.</p>
+                        <button onclick="resetFilters()" class="mt-4 text-sm text-bc-orange hover:underline">إلغاء التصفيات</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- قسم التواصل -->
-    <section class="contact-section">
-        <h2>هل أنت مهتم بامتلاك هذا الدومين؟</h2>
-        <p>لا تضيع الفرصة، تواصل معنا اليوم لتقديم عرضك.</p>
-        
-        <div class="email-box">
-            <span>راسلنا مباشرة على:</span>
-            <a href="mailto:ys.yacine.siousiou@gmail.com?subject=استفسار%20بخصوص%20Yacht%20Kuwait" class="email-link">ys.yacine.siousiou@gmail.com</a>
+        <!-- VIEW: YACHT DETAIL -->
+        <div id="view-yacht-detail" class="hidden fade-in pb-10">
+            <button onclick="showSection('yachts')" class="mb-6 flex items-center gap-2 text-bc-orange hover:text-orange-700 font-medium transition group">
+                <i class="fa-solid fa-arrow-right group-hover:-translate-x-1 transition-transform"></i> 
+                <span data-i18n="back_to_yachts">العودة لليخوت</span>
+            </button>
+            <div id="yacht-detail-container"></div>
         </div>
-    </section>
 
-    <footer>
-        &copy; 2025 Yacht Kuwait - جميع الحقوق محفوظة.
+        <!-- VIEW: ARTICLES LIST -->
+        <div id="view-articles-list" class="hidden fade-in">
+            <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
+                <h1 class="text-3xl font-bold text-slate-900" data-i18n="articles_title">أحدث المقالات والأخبار</h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="articles-grid-container"></div>
+        </div>
+
+        <!-- VIEW: ARTICLE DETAIL -->
+        <div id="view-article-detail" class="hidden fade-in w-full bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div id="article-content-container" class="w-full"></div>
+        </div>
+
+        <!-- VIEW: GENERAL PAGE DETAIL -->
+        <div id="view-page-detail" class="hidden fade-in w-full bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+             <div id="page-content-container" class="w-full"></div>
+        </div>
+
+        <!-- VIEW: ADMIN DASHBOARD -->
+        <div id="view-admin" class="hidden fade-in bg-slate-50 min-h-screen -mx-4 -mb-8 px-4 pb-20 pt-4">
+             <nav class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm rounded-xl mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 bg-bc-orange rounded-full"></div>
+                    <h1 class="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
+                </div>
+                <button onclick="logoutAdmin()" class="flex items-center gap-2 text-red-500 font-bold text-sm bg-red-50 px-4 py-2 rounded-lg hover:bg-red-100 transition">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </nav>
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+                 <div class="w-full lg:w-64 flex-shrink-0 bg-white rounded-xl shadow-sm p-4 space-y-2 h-fit">
+                     <button onclick="switchAdminTab('articles')" class="w-full text-right px-4 py-3 rounded-lg font-bold transition flex items-center justify-between group" id="btn-admin-articles">
+                        <span>إدارة المقالات</span>
+                        <i class="fa-solid fa-chevron-left text-xs opacity-50 group-hover:-translate-x-1 transition"></i>
+                     </button>
+                     <button onclick="switchAdminTab('yachts')" class="w-full text-right px-4 py-3 hover:bg-gray-50 rounded-lg transition flex items-center justify-between group" id="btn-admin-yachts">
+                        <span>إدارة اليخوت</span>
+                        <i class="fa-solid fa-chevron-left text-xs opacity-50 group-hover:-translate-x-1 transition"></i>
+                     </button>
+                     <button onclick="switchAdminTab('general')" class="w-full text-right px-4 py-3 hover:bg-gray-50 rounded-lg transition flex items-center justify-between group" id="btn-admin-general">
+                        <span>الإعدادات العامة</span>
+                        <i class="fa-solid fa-chevron-left text-xs opacity-50 group-hover:-translate-x-1 transition"></i>
+                     </button>
+                 </div>
+                 <div class="flex-1 bg-white rounded-xl shadow-sm p-6 min-h-[500px]">
+                     
+                     <!-- Articles Tab -->
+                     <div id="admin-tab-articles" class="admin-tab">
+                         <div class="flex justify-between items-center mb-6 border-b pb-4">
+                             <h2 class="text-xl font-bold text-slate-800">المقالات المنشورة</h2>
+                             <button onclick="showAddArticleForm()" class="bg-bc-orange text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition shadow-md shadow-orange-500/20">
+                                 <i class="fa-solid fa-plus ml-2"></i> أضف مقال
+                             </button>
+                         </div>
+                         <div id="admin-articles-list" class="space-y-3"></div>
+                     </div>
+
+                     <!-- Yachts Tab -->
+                     <div id="admin-tab-yachts" class="admin-tab hidden">
+                        <div class="flex justify-between items-center mb-6 border-b pb-4">
+                            <h2 class="text-xl font-bold text-slate-800">أسطول اليخوت</h2>
+                            <button onclick="showAddYachtForm()" class="bg-bc-dark text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-700 transition shadow-md">
+                                <i class="fa-solid fa-plus ml-2"></i> إضافة يخت
+                            </button>
+                        </div>
+                        <div id="admin-yachts-list" class="space-y-3"></div>
+                     </div>
+
+                     <!-- General Settings Tab -->
+                     <div id="admin-tab-general" class="admin-tab hidden">
+                         <h3 class="font-bold text-xl mb-6 border-b pb-4">الإعدادات العامة للموقع</h3>
+                         <div class="space-y-6 max-w-3xl">
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                 <div>
+                                     <label class="block text-sm font-bold text-gray-600 mb-2">عنوان الصفحة (Title)</label>
+                                     <input type="text" id="admin-page-title" class="w-full border border-gray-300 p-2.5 rounded-lg focus:border-bc-orange focus:ring-1 focus:ring-bc-orange outline-none transition">
+                                 </div>
+                                 <div>
+                                     <label class="block text-sm font-bold text-gray-600 mb-2">نص شريط التتبع (Breadcrumbs)</label>
+                                     <input type="text" id="admin-breadcrumbs-text" class="w-full border border-gray-300 p-2.5 rounded-lg focus:border-bc-orange focus:ring-1 focus:ring-bc-orange outline-none transition">
+                                 </div>
+                             </div>
+
+                             <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                 <h4 class="font-bold mb-4 text-bc-orange">إعدادات البانر الرئيسي</h4>
+                                 <div class="space-y-4">
+                                     <input type="text" id="admin-banner-title" class="w-full border p-2.5 rounded-lg" placeholder="عنوان البانر">
+                                     <input type="text" id="admin-banner-subtitle" class="w-full border p-2.5 rounded-lg" placeholder="وصف البانر">
+                                     <input type="text" id="admin-banner-img" class="w-full border p-2.5 rounded-lg" placeholder="رابط صورة البانر (URL)">
+                                 </div>
+                             </div>
+                             
+                             <div>
+                                 <label class="block text-sm font-bold text-gray-600 mb-2">رابط صورة إعلان المقال (أسفل المقال)</label>
+                                 <input type="text" id="admin-article-ad-img" class="w-full border border-gray-300 p-3 rounded-lg text-sm focus:border-bc-orange focus:outline-none transition" placeholder="URL">
+                             </div>
+
+                             <h4 class="font-bold mt-8 mb-4 border-t pt-6 text-lg">تعديل صفحات "المزيد"</h4>
+                             <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                 <label class="block text-sm font-bold text-gray-600 mb-2">اختر الصفحة للتعديل:</label>
+                                 <select id="admin-more-page-select" class="w-full border border-gray-300 p-2.5 rounded-lg mb-4 bg-white" onchange="loadMorePageContent()">
+                                     <!-- Populated via JS -->
+                                 </select>
+                                 
+                                 <label class="block text-sm font-bold text-gray-600 mb-2">العنوان:</label>
+                                 <input type="text" id="admin-more-page-title" class="w-full border p-2.5 rounded-lg mb-4">
+                                 
+                                 <label class="block text-sm font-bold text-gray-600 mb-2">المحتوى (HTML):</label>
+                                 <textarea id="admin-more-page-content" class="w-full border p-3 rounded-lg h-48 font-mono text-xs leading-relaxed"></textarea>
+                             </div>
+
+                             <button onclick="saveGeneralSettings()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg w-full font-bold shadow-lg shadow-green-600/20 transition mt-4">حفظ كل التغييرات</button>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bc-dark text-slate-300 py-12 mt-auto">
+        <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <span class="text-2xl font-italiana text-white block mb-4">YACHT KUWAIT</span>
+                <p class="text-sm leading-relaxed opacity-80">نقدم تجربة إبحار فاخرة في أجمل مياه الخليج. تميز بالرفاهية والخصوصية مع أسطولنا المتميز.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">روابط سريعة</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" onclick="showSection('yachts')" class="hover:text-bc-orange transition">الرئيسية</a></li>
+                    <li><a href="#" onclick="showSection('articles')" class="hover:text-bc-orange transition">المقالات</a></li>
+                    <li><a href="#" class="hover:text-bc-orange transition">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">تواصل معنا</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><i class="fa-brands fa-whatsapp w-6 text-center"></i> +965 1234 5678</li>
+                    <li><i class="fa-regular fa-envelope w-6 text-center"></i> info@yachtkuwait.com</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">تابعنا</h4>
+                <div class="flex gap-4 text-xl">
+                    <a href="#" class="hover:text-bc-orange transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-bc-orange transition"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="hover:text-bc-orange transition"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-xs text-slate-500 mt-12 pt-8 border-t border-slate-800">
+            &copy; 2025 Yacht Kuwait. All rights reserved.
+        </div>
     </footer>
 
+    <!-- Admin Article Modal -->
+    <div id="admin-article-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center modal-overlay p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal('article')" class="absolute top-5 right-5 text-gray-400 hover:text-red-500 transition bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-bold text-2xl mb-8 text-slate-800 border-b pb-4 flex items-center gap-2"><i class="fa-regular fa-newspaper text-bc-orange"></i> <span id="modal-article-title">تحرير المقال</span></h3>
+            <input type="hidden" id="modal-article-id">
+            <div class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-500">العنوان (عربي)</label>
+                        <input type="text" id="modal-article-title-ar" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-500">العنوان (إنجليزي)</label>
+                        <input type="text" id="modal-article-title-en" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-500">العنوان الفرعي (عربي)</label>
+                        <input type="text" id="modal-article-subtitle-ar" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-500">العنوان الفرعي (إنجليزي)</label>
+                        <input type="text" id="modal-article-subtitle-en" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none">
+                    </div>
+                </div>
+                <div class="space-y-1">
+                     <label class="text-xs font-bold text-gray-500">معلومات النشر (مثال: Admin • 2025)</label>
+                     <input type="text" id="modal-article-meta" class="w-full border p-2.5 rounded-lg">
+                </div>
+                <div class="space-y-1">
+                     <label class="text-xs font-bold text-gray-500">رابط الصورة (URL)</label>
+                     <input type="text" id="modal-article-image" class="w-full border p-2.5 rounded-lg text-left" dir="ltr">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-500">المحتوى (عربي - HTML)</label>
+                        <textarea id="modal-article-content-ar" class="w-full border p-3 rounded-lg h-64 font-mono text-xs focus:border-bc-orange outline-none resize-none"></textarea>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-500">المحتوى (إنجليزي - HTML)</label>
+                        <textarea id="modal-article-content-en" class="w-full border p-3 rounded-lg h-64 font-mono text-xs focus:border-bc-orange outline-none resize-none" dir="ltr"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-8 justify-end border-t pt-6">
+                <button onclick="closeAdminModal('article')" class="px-6 py-2.5 rounded-lg bg-gray-200 text-gray-700 font-bold hover:bg-gray-300 transition">إلغاء</button>
+                <button onclick="saveArticleModal()" class="px-8 py-2.5 rounded-lg bg-green-600 text-white font-bold shadow-lg hover:bg-green-700 transition">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Yacht Modal -->
+    <div id="admin-yacht-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center modal-overlay p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal('yacht')" class="absolute top-5 right-5 text-gray-400 hover:text-red-500 transition bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-bold text-2xl mb-8 text-slate-800 border-b pb-4 flex items-center gap-2"><i class="fa-solid fa-anchor text-bc-orange"></i> بيانات اليخت</h3>
+            <input type="hidden" id="modal-yacht-id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input type="text" id="modal-yacht-name" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none" placeholder="اسم اليخت">
+                <input type="text" id="modal-yacht-brand" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none" placeholder="الماركة">
+                <input type="number" id="modal-yacht-price" class="w-full border p-2.5 rounded-lg focus:border-bc-orange outline-none" placeholder="السعر اليومي (د.ك)">
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="modal-yacht-guests-day" class="w-full border p-2.5 rounded-lg text-sm" placeholder="ضيوف (نهار)">
+                    <input type="number" id="modal-yacht-guests-sleep" class="w-full border p-2.5 rounded-lg text-sm" placeholder="ضيوف (نوم)">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="modal-yacht-cabins" class="w-full border p-2.5 rounded-lg text-sm" placeholder="عدد الكبائن">
+                    <input type="number" id="modal-yacht-crew" class="w-full border p-2.5 rounded-lg text-sm" placeholder="عدد الطاقم">
+                </div>
+                
+                <input type="text" id="modal-yacht-speed" class="w-full border p-2.5 rounded-lg" placeholder="السرعة (مثال: 25 kn)">
+                <input type="text" id="modal-yacht-badge" class="w-full border p-2.5 rounded-lg" placeholder="شارة (badge_week / badge_new)">
+                
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">عنوان وصف اليخت</label>
+                    <input type="text" id="modal-yacht-about-title" class="w-full border p-2.5 rounded-lg text-sm" placeholder="مثال: عن هذا اليخت / قصة اليخت">
+                </div>
+
+                <input type="text" id="modal-yacht-email" class="w-full border p-2.5 rounded-lg" placeholder="البريد الإلكتروني للحجز">
+                <input type="text" id="modal-yacht-phone" class="w-full border p-2.5 rounded-lg" placeholder="رقم الهاتف">
+                
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">وصف اليخت</label>
+                    <textarea id="modal-yacht-desc" class="w-full border p-3 rounded-lg h-24 text-sm focus:border-bc-orange outline-none"></textarea>
+                </div>
+
+                <div class="md:col-span-2 space-y-3 bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-xs font-bold text-gray-500 uppercase">صور المعرض (ROURLs)</h4>
+                    <input type="text" id="modal-yacht-image" class="w-full border p-2 rounded text-sm text-left" dir="ltr" placeholder="الصورة الرئيسية">
+                    <input type="text" id="modal-yacht-image2" class="w-full border p-2 rounded text-sm text-left" dir="ltr" placeholder="صورة إضافية 1">
+                    <input type="text" id="modal-yacht-image3" class="w-full border p-2 rounded text-sm text-left" dir="ltr" placeholder="صورة إضافية 2">
+                </div>
+            </div>
+            <div class="flex gap-3 mt-8 justify-end border-t pt-6">
+                <button onclick="closeAdminModal('yacht')" class="px-6 py-2.5 rounded-lg bg-gray-200 text-gray-700 font-bold hover:bg-gray-300 transition">إلغاء</button>
+                <button onclick="saveYachtModal()" class="px-8 py-2.5 rounded-lg bg-green-600 text-white font-bold shadow-lg hover:bg-green-700 transition">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center modal-overlay p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-bc-orange"></div>
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <form class="space-y-5" onsubmit="event.preventDefault(); handleLogin();">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-slate-800">تسجيل الدخول</h2>
+                    <p class="text-xs text-gray-400 mt-1">لوحة تحكم المشرفين</p>
+                </div>
+                <div>
+                    <input type="email" id="login-email" class="w-full border border-gray-300 p-3 rounded-lg focus:border-bc-orange focus:ring-1 focus:ring-bc-orange outline-none transition" placeholder="البريد الإلكتروني">
+                </div>
+                <div>
+                    <input type="password" id="login-password" class="w-full border border-gray-300 p-3 rounded-lg focus:border-bc-orange focus:ring-1 focus:ring-bc-orange outline-none transition" placeholder="كلمة المرور">
+                </div>
+                <button class="w-full bg-bc-dark hover:bg-slate-800 text-white py-3 rounded-lg font-bold shadow-lg transition transform active:scale-95">دخول</button>
+                <p id="login-error" class="text-red-500 text-xs text-center hidden font-bold bg-red-50 py-2 rounded"><i class="fa-solid fa-circle-exclamation ml-1"></i> بيانات الدخول غير صحيحة</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const exchangeRates = { 'KWD': {rate:1,symbol:'د.ك'}, 'SAR':{rate:12.2,symbol:'ر.س'}, 'USD':{rate:3.25,symbol:'$'} };
+        const translations = {
+            'ar': { 'nav_articles': 'المقالات', 'nav_more': 'المزيد', 'home': 'الرئيسية', 'breadcrumbs': 'تأجير يخوت في الكويت', 'search_btn': 'بحث', 'read_more': 'اقرأ المزيد', 'filter_title': 'تصفية', 'reset': 'إعادة تعيين', 'price_per': 'السعر حسب', 'day': 'يوم', 'week': 'أسبوع', 'boat_type': 'نوع القارب', 'guests_day': 'ضيوف (نهار)', 'guests_sleep': 'ضيوف (نوم)', 'ad_space': 'مساحة إعلانية', 'account_tooltip': 'تسجيل الدخول', 'sort_featured': 'مميز', 'sort_low': 'السعر: الأقل أولاً', 'sort_high': 'السعر: الأعلى أولاً', 'filter_superyacht': 'يخت فاخر', 'filter_motoryacht': 'يخت بمحرك', 'spec_cruise': 'إبحار', 'spec_sleep': 'نوم', 'spec_cabins': 'كبائن', 'spec_crew': 'طاقم', 'spec_speed': 'سرعة', 'broker_title': 'اطلب اليخت', 'day_rate': 'السعر اليومي', 'contact_whatsapp': 'واتساب', 'contact_email': 'إيميل', 'back_to_yachts': 'العودة', 'back_to_articles': 'العودة للمقالات', 'articles_title': 'أحدث المقالات', 'label_day': 'في اليوم', 'label_week': 'في الأسبوع', 'badge_week': 'عرض الأسبوع', 'badge_new': 'جديد' },
+            'en': { 'nav_articles': 'Articles', 'nav_more': 'More', 'home': 'Home', 'breadcrumbs': 'Yacht Charter Kuwait', 'search_btn': 'Search', 'read_more': 'Read More', 'filter_title': 'Filters', 'reset': 'Reset', 'price_per': 'Price Per', 'day': 'Day', 'week': 'Week', 'boat_type': 'Boat Type', 'guests_day': 'Guests', 'guests_sleep': 'Sleeps', 'ad_space': 'Ad Space', 'account_tooltip': 'Login', 'sort_featured': 'Featured', 'sort_low': 'Price: Low to High', 'sort_high': 'Price: High to Low', 'filter_superyacht': 'Superyacht', 'filter_motoryacht': 'Motor Yacht', 'spec_cruise': 'Cruise', 'spec_sleep': 'Sleep', 'spec_cabins': 'Cabins', 'spec_crew': 'Crew', 'spec_speed': 'Speed', 'broker_title': 'Request Yacht', 'day_rate': 'Day Rate', 'contact_whatsapp': 'WhatsApp', 'contact_email': 'Email', 'back_to_yachts': 'Back', 'back_to_articles': 'Back to Articles', 'articles_title': 'Latest Articles', 'label_day': 'per day', 'label_week': 'per week', 'badge_week': 'Week Offer', 'badge_new': 'New' }
+        };
+
+        // --- RICH SEO CONTENT ---
+        let articles = [
+            {
+                id: 1, title_ar: "أفضل يخوت للبيع في الكويت 2025: دليل شامل للمشتري", subtitle_ar: "كل ما تحتاج معرفته عن الأسعار، الأنواع، وأفضل العلامات التجارية.", image: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=2000&auto=format&fit=crop", meta: "دليل الشراء • يناير 2025",
+                content_ar: `<h2>نظرة عامة على سوق اليخوت في الكويت 2025</h2><p>في قلب المياه الفيروزية للخليج العربي، يتجه عشاق البحر في الكويت نحو اقتناء تحف بحرية لا تعكس فقط الرفاهية، بل تمثل استثماراً في أسلوب حياة استثنائي.</p><h2>لماذا يعتبر هذا الوقت مثالياً للشراء؟</h2><p>مع تطور البنية التحتية للمراسي (مثل مرسى الخيران الجديد وتوسعة المارينا)، أصبح امتلاك يخت أكثر سلاسة من أي وقت مضى.</p>`
+            },
+            {
+                id: 2, title_ar: "لماذا أصبحت الكويت سوقًا مهمًا لليخوت والبحر؟", subtitle_ar: "تحليل عميق للثقافة البحرية وتطور قطاع الرفاهية.", image: "https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?q=80&w=2000&auto=format&fit=crop", meta: "سوق • يناير 2025",
+                content_ar: `<h2>الجذور التاريخية</h2><p>علاقة الكويتيين بالبحر متجذرة في التاريخ منذ أيام الغوص. هذا الإرث تحول في العصر الحديث إلى ثقافة بحرية متطورة.</p>`
+            }
+        ];
+        
+        const remainingTitles = [
+            {t:"أسعار اليخوت في الكويت: تحليل كامل", s:"دليل الأسعار حسب الطول والماركة."},
+            {t:"كيف تختار اليخت المناسب لك؟", s:"دليل المبتدئين: صيد، نزهة، أم VIP؟"},
+            {t:"أفضل ماركات اليخوت العالمية في الخليج", s:"مقارنة العمالقة: Sunseeker, Azimut."},
+            {t:"دليل صيانة اليخوت في الكويت", s:"أهم الشركات والخدمات المتاحة."},
+            {t:"أهم 10 مشاكل شائعة في اليخوت", s:"وكيف تتجنبها قبل حدوثها."},
+            {t:"كيف تقوم بفحص يخت قبل الشراء؟", s:"Checklist احترافي لضمان سلامتك."},
+            {t:"تكلفة صيانة اليخت في الكويت", s:"تحليل للميزانية السنوية المطلوبة."},
+            {t:"أفضل شركات تنظيف اليخوت", s:"خدمات الغسيل وتلميع الجل كوت."},
+            {t:"أفضل المراسي في الكويت", s:"مقارنة: مارينا كريسنت، الكوت، الخيران."},
+            {t:"دليل الإبحار في الكويت", s:"أفضل الجزر والوجهات البحرية."},
+            {t:"أفضل أماكن الصيد البحري", s:"إحداثيات ومواقع للحداقة."}
+        ];
+        remainingTitles.forEach((item, index) => {
+             articles.push({
+                id: index + 3,
+                title_ar: item.t,
+                subtitle_ar: item.s,
+                image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=2000&auto=format&fit=crop",
+                meta: "مقال مميز • 2025",
+                content_ar: `<h2>مقدمة في ${item.t}</h2><p>محتوى افتراضي للمقال رقم ${index+3}. يوفر هذا القسم معلومات تفصيلية حول الموضوع المختار مع نصائح عملية.</p>`
+            });
+        });
+        articles.sort((a,b) => a.id - b.id);
+
+        // Mutable "More" pages data
+        let morePagesData = {
+            1: { title: "دليل اليخوت في الكويت", content: "<h2>دليل شامل لليخوت</h2><p>معلومات مفصلة عن أنواع اليخوت المتوفرة، الأسعار المتوقعة، وأفضل الشركات الموثوقة في السوق الكويتي.</p>" },
+            2: { title: "الأسعار والتكاليف", content: "<h2>تحليل التكاليف</h2><p>تفاصيل دقيقة عن تكاليف الصيانة الدورية، استهلاك الوقود، رسوم الرسو في المراسي المختلفة، وتكاليف التأمين السنوي.</p>" },
+            3: { title: "الموانئ والمراسي في الكويت", content: "<h2>أهم المراسي</h2><p>استعراض شامل لمرافق مارينا كريسنت، الكوت، سوق شرق، ومنتزه الخيران، مع مقارنة الخدمات والأسعار.</p>" },
+            4: { title: "الصيانة البحرية", content: "<h2>دليل الصيانة</h2><p>نصائح للحفاظ على المحركات، تنظيف القاع (Antifouling)، وفحص الأنظمة الكهربائية، خاصة في فصلي الصيف والشتاء.</p>" },
+            5: { title: "خدمات التأجير", content: "<h2>خيارات التأجير</h2><p>تعرف على أنواع الرحلات المتاحة: رحلات الصيد، النزهات العائلية، حفلات أعياد الميلاد، والرحلات الرومانسية وقت الغروب.</p>" },
+            6: { title: "القانون البحري في الكويت", content: "<h2>التشريعات والقوانين</h2><p>كل ما تحتاج معرفته عن رخص القيادة (الليسن)، تسجيل القوارب، الوثائق المطلوبة، وقوانين حماية البيئة البحرية.</p>" },
+            7: { title: "دليل شراء يخت", content: "<h2>نصائح للمشترين</h2><p>كيف تختار اليخت المناسب؟ الفرق بين الجديد والمستعمل، أهم نقاط الفحص الفني، والموديلات الأكثر ملاءمة لأجواء الكويت.</p>" },
+            8: { title: "أنواع اليخوت", content: "<h2>تصنيفات اليخوت</h2><p>شرح مصور لأنواع اليخوت: سوبر يخت، ميجا يخت، طرادات الصيد، ويخوت النزهة (Cruisers).</p>" }
+        };
+
+        // Yachts Data
+        let yachts = [
+            { id: 1, name: "CARPE DIEM", type: "Superyacht", brand: "Azimut", year: 2023, lengthFt: 102, lengthM: 31, guestsDay: 12, guestsSleep: 9, cabins: 4, crew: 4, speed: "25 kn", beds: "Variable", priceDay: 5150, priceWeek: 36050, image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=800&auto=format&fit=crop", image2: "https://images.unsplash.com/photo-1605281317010-fe5ffe79ba02?q=80&w=800&auto=format&fit=crop", image3: "https://images.unsplash.com/photo-1544627836-822684457994?q=80&w=800&auto=format&fit=crop", badgeKey: "badge_week", aboutTitle: "About CARPE DIEM", description: "Experience the ultimate luxury...", email: "info@yachtkuwait.com", phone: "+965 1234 5678" },
+            { id: 2, name: "OPTIMISM", type: "Superyacht", brand: "Gulf Craft", year: 2024, lengthFt: 121, lengthM: 37, guestsDay: 12, guestsSleep: 12, cabins: 6, crew: 6, speed: "20 kn", beds: "Variable", priceDay: 9250, priceWeek: 64750, image: "https://images.unsplash.com/photo-1605281317010-fe5ffe79ba02?q=80&w=800&auto=format&fit=crop", image2: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop", image3: "https://images.unsplash.com/photo-1621275471769-e6aa344546d5?q=80&w=800&auto=format&fit=crop", badgeKey: "badge_new", aboutTitle: "About OPTIMISM", description: "A masterpiece of engineering...", email: "info@yachtkuwait.com", phone: "+965 9999 8888" },
+            { id: 3, name: "JUST A VACATION", type: "Superyacht", brand: "Ocean Alexander", year: 2024, lengthFt: 98, lengthM: 30, guestsDay: 12, guestsSleep: 10, cabins: 5, crew: 5, speed: "18 kn", beds: "Variable", priceDay: 4900, priceWeek: 34300, image: "https://images.unsplash.com/photo-1544627836-822684457994?q=80&w=800&auto=format&fit=crop", image2: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=800&auto=format&fit=crop", image3: "https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?q=80&w=800&auto=format&fit=crop", badgeKey: "badge_new", aboutTitle: "About THIS YACHT", description: "Modern luxury defined...", email: "info@yachtkuwait.com", phone: "+965 5555 4444" },
+            { id: 4, name: "FERRETTI", type: "Motor Yacht", brand: "Ferretti", year: 2018, lengthFt: 80, lengthM: 25, guestsDay: 25, guestsSleep: 8, cabins: 4, crew: 3, speed: "30 kn", beds: "Variable", priceDay: 4600, priceWeek: 32200, image: "https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?q=80&w=800&auto=format&fit=crop", image2: "https://images.unsplash.com/photo-1582234057630-9b441f715838?q=80&w=800&auto=format&fit=crop", image3: "https://images.unsplash.com/photo-1621275471769-e6aa344546d5?q=80&w=800&auto=format&fit=crop", badgeKey: null, aboutTitle: "About FERRETTI", description: "Speed and comfort combined...", email: "sales@ferretti.kw", phone: "+965 6666 7777" },
+            { id: 5, name: "SEA-RENITY", type: "Superyacht", brand: "Horizon", year: 2022, lengthFt: 100, lengthM: 31, guestsDay: 12, guestsSleep: 10, cabins: 5, crew: 5, speed: "22 kn", beds: "Variable", priceDay: 4900, priceWeek: 34300, image: "https://images.unsplash.com/photo-1621275471769-e6aa344546d5?q=80&w=800&auto=format&fit=crop", image2: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop", image3: "https://images.unsplash.com/photo-1605281317010-fe5ffe79ba02?q=80&w=800&auto=format&fit=crop", badgeKey: "badge_new", aboutTitle: "About SEA-RENITY", description: "Serenity at sea...", email: "horizon@yachtkuwait.com", phone: "+965 2222 3333" },
+            { id: 6, name: "A SALT WEAPON", type: "Superyacht", brand: "Ocean Alexander", year: 2024, lengthFt: 145, lengthM: 35, guestsDay: 14, guestsSleep: 12, cabins: 6, crew: 7, speed: "15 kn", beds: "Variable", priceDay: 6000, priceWeek: 42000, image: "https://images.unsplash.com/photo-1582234057630-9b441f715838?q=80&w=800&auto=format&fit=crop", image2: "https://images.unsplash.com/photo-1544627836-822684457994?q=80&w=800&auto=format&fit=crop", image3: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=800&auto=format&fit=crop", badgeKey: "badge_new", aboutTitle: "About A SALT WEAPON", description: "The ultimate flagship...", email: "info@yachtkuwait.com", phone: "+965 1111 0000" }
+        ];
+
+        let currentLang = 'ar'; let currentCurrencyCode = 'KWD'; let currentPriceType = 'day'; const filterState = { guestsDay: 0, guestsSleep: 0 };
+        let globalArticleAdImg = "https://images.unsplash.com/photo-1559136555-930d72f1d37c?q=80&w=2000&auto=format&fit=crop";
+
+        function toggleAuthModal(view='login') { 
+            const modal = document.getElementById('auth-modal'); 
+            modal.classList.remove('hidden'); 
+            document.getElementById('login-error').classList.add('hidden');
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
+        }
+        function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+        
+        window.handleLogin = function() { 
+            const email = document.getElementById('login-email').value; 
+            const pass = document.getElementById('login-password').value; 
+            const errorMsg = document.getElementById('login-error');
+            
+            if(email === 'yac200508@gmail.com' && pass === 'ggun') { 
+                closeAuthModal(); 
+                showSection('admin'); 
+            } else { 
+                errorMsg.classList.remove('hidden');
+            } 
+        };
+        
+        window.logoutAdmin = function() { showSection('yachts'); };
+        
+        window.showSection = function(sectionName) {
+            const sections = ['view-yachts', 'view-articles-list', 'view-article-detail', 'view-yacht-detail', 'view-admin', 'view-page-detail'];
+            sections.forEach(id => document.getElementById(id).classList.add('hidden'));
+
+            const banner = document.getElementById('ad-banner'); 
+            const breadcrumbs = document.getElementById('main-breadcrumbs');
+            
+            if (sectionName === 'yachts') { 
+                document.getElementById('view-yachts').classList.remove('hidden'); 
+                if(banner) banner.classList.remove('hidden'); 
+                if(breadcrumbs) breadcrumbs.classList.remove('hidden'); 
+                window.scrollTo(0,0);
+            }
+            else if (sectionName === 'articles') { 
+                document.getElementById('view-articles-list').classList.remove('hidden'); 
+                renderArticlesList(); 
+                if(banner) banner.classList.add('hidden'); 
+                window.scrollTo(0,0);
+            }
+            else if (sectionName === 'admin') { 
+                document.getElementById('view-admin').classList.remove('hidden'); 
+                if(banner) banner.classList.add('hidden'); 
+                if(breadcrumbs) breadcrumbs.classList.add('hidden'); 
+                renderAdminGeneral(); renderAdminYachts(); renderAdminArticles(); 
+            }
+        };
+
+        window.openPage = function(id) {
+            const pageData = morePagesData[id];
+            if (!pageData) return;
+            const sections = ['view-yachts', 'view-articles-list', 'view-article-detail', 'view-yacht-detail', 'view-admin', 'view-page-detail'];
+            sections.forEach(sid => document.getElementById(sid).classList.add('hidden'));
+            
+            document.getElementById('ad-banner').classList.add('hidden');
+            document.getElementById('view-page-detail').classList.remove('hidden');
+            
+            const container = document.getElementById('page-content-container');
+            container.dir = 'rtl';
+            container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-6 py-12">
+                    <h1 class="text-4xl font-bold text-slate-900 mb-8 pb-4 border-b border-gray-200 font-cairo">${pageData.title}</h1>
+                    <div class="article-body prose prose-lg prose-slate max-w-none">
+                        ${pageData.content}
+                    </div>
+                    <div class="mt-12 text-center">
+                         <button onclick="showSection('yachts')" class="text-bc-orange hover:underline font-bold">العودة للرئيسية</button>
+                    </div>
+                </div>
+            `;
+            window.scrollTo(0,0);
+        };
+
+        function renderMoreMenu() {
+            const container = document.getElementById('more-menu-links');
+            container.innerHTML = '';
+            for (const [id, data] of Object.entries(morePagesData)) {
+                container.innerHTML += `<a onclick="openPage(${id})" class="px-4 py-2 hover:bg-gray-50 text-sm rounded hover:text-bc-orange transition block cursor-pointer text-right">${data.title}</a>`;
+            }
+        }
+        renderMoreMenu();
+
+        function loadMorePageContent() {
+            const id = document.getElementById('admin-more-page-select').value;
+            const data = morePagesData[id];
+            if(data) {
+                document.getElementById('admin-more-page-title').value = data.title;
+                document.getElementById('admin-more-page-content').value = data.content;
+            }
+        }
+
+        window.renderAdminGeneral = function() {
+            document.getElementById('admin-banner-title').value = document.getElementById('banner-title-el').innerText;
+            document.getElementById('admin-banner-subtitle').value = document.getElementById('banner-subtitle-el').innerText;
+            document.getElementById('admin-banner-img').value = document.getElementById('banner-image-el').src;
+            document.getElementById('admin-page-title').value = document.getElementById('page-title-el').innerText;
+            document.getElementById('admin-breadcrumbs-text').value = document.getElementById('breadcrumbs-text').innerText;
+            document.getElementById('admin-article-ad-img').value = globalArticleAdImg;
+
+            const select = document.getElementById('admin-more-page-select');
+            select.innerHTML = '';
+            for (const [id, data] of Object.entries(morePagesData)) {
+                select.innerHTML += `<option value="${id}">${data.title}</option>`;
+            }
+            loadMorePageContent();
+        };
+
+        window.saveGeneralSettings = function() {
+            const title = document.getElementById('admin-banner-title').value;
+            const sub = document.getElementById('admin-banner-subtitle').value;
+            const img = document.getElementById('admin-banner-img').value;
+            const pageTitle = document.getElementById('admin-page-title').value;
+            document.getElementById('banner-title-el').innerText = title;
+            document.getElementById('banner-subtitle-el').innerText = sub;
+            document.getElementById('banner-image-el').src = img;
+            document.getElementById('page-title-el').innerText = pageTitle;
+            document.getElementById('breadcrumbs-text').innerText = document.getElementById('admin-breadcrumbs-text').value;
+            globalArticleAdImg = document.getElementById('admin-article-ad-img').value;
+
+            const moreId = document.getElementById('admin-more-page-select').value;
+            if(moreId) {
+                morePagesData[moreId].title = document.getElementById('admin-more-page-title').value;
+                morePagesData[moreId].content = document.getElementById('admin-more-page-content').value;
+                renderMoreMenu();
+            }
+
+            alert('تم حفظ الإعدادات بنجاح!'); // kept standard alert for admin success only
+        };
+
+        window.renderArticlesList = function() {
+            const container = document.getElementById('articles-grid-container'); 
+            container.innerHTML = '';
+            articles.forEach(art => {
+                const title = currentLang === 'ar' ? art.title_ar : (art.title_en || art.title_ar); 
+                const subtitle = currentLang === 'ar' ? art.subtitle_ar : (art.subtitle_en || art.subtitle_ar); 
+                const btnText = translations[currentLang]['read_more'];
+                container.innerHTML += `<div class="bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer border border-gray-100 flex flex-col h-full" onclick="openArticle(${art.id})"><div class="h-48 overflow-hidden relative"><img src="${art.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition"></div></div><div class="p-6 flex flex-col flex-1"><p class="text-[10px] text-bc-orange mb-2 uppercase tracking-wider font-bold">${art.meta || 'News'}</p><h3 class="font-bold text-xl mb-3 text-slate-800 leading-tight group-hover:text-bc-orange transition">${title}</h3><p class="text-slate-500 text-sm mb-4 line-clamp-2">${subtitle}</p><div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between"><span class="text-slate-700 font-semibold text-sm group-hover:translate-x-1 transition flex items-center gap-1">${btnText} <i class="fa-solid fa-arrow-left text-[10px] mt-1"></i></span></div></div></div>`;
+            });
+        };
+
+        window.openArticle = function(id) {
+            const article = articles.find(a => a.id === id); if (!article) return;
+            const sections = ['view-yachts', 'view-articles-list', 'view-article-detail', 'view-yacht-detail', 'view-admin', 'view-page-detail'];
+            sections.forEach(sid => document.getElementById(sid).classList.add('hidden'));
+            
+            document.getElementById('view-article-detail').classList.remove('hidden');
+            const contentContainer = document.getElementById('article-content-container');
+            const dir = currentLang === 'ar' ? 'rtl' : 'ltr'; contentContainer.dir = dir;
+            const title = currentLang === 'ar' ? article.title_ar : (article.title_en || article.title_ar); 
+            const subtitle = currentLang === 'ar' ? article.subtitle_ar : (article.subtitle_en || article.subtitle_ar); 
+            const body = currentLang === 'ar' ? article.content_ar : (article.content_en || article.content_ar);
+
+            contentContainer.innerHTML = `
+                <div class="w-full h-16 bg-gray-50 flex items-center justify-center border-b border-gray-100 mb-0"><p class="text-[10px] uppercase tracking-[0.3em] text-gray-400">Yacht Kuwait • Journal</p></div>
+                <div class="w-full h-[60vh] relative mb-12"><img src="${article.image}" class="w-full h-full object-cover"></div>
+                <div class="max-w-3xl mx-auto px-6 pb-20 article-content">
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl md:text-5xl text-slate-900 mb-6 leading-tight font-cairo">${title}</h1>
+                        <div class="flex items-center justify-center gap-4 text-xs uppercase tracking-[0.15em] text-gray-500 font-medium"><span>${article.meta || 'Admin • 2025'}</span></div>
+                    </div>
+                    <div class="article-body">
+                        <p class="text-xl leading-relaxed font-medium text-slate-800 mb-8 border-b pb-8">${subtitle}</p>
+                        ${body}
+                    </div>
+                    
+                    <div class="w-full h-32 bg-gray-900 mt-16 mb-16 flex items-center justify-center overflow-hidden relative group cursor-pointer rounded-lg shadow-lg">
+                        <img src="${globalArticleAdImg}" class="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-105 transition duration-700">
+                        <div class="relative z-10 text-center">
+                            <p class="text-white text-2xl font-serif tracking-widest uppercase mb-1">YACHT KUWAIT</p>
+                            <p class="text-white/80 text-xs tracking-[0.2em] uppercase" data-i18n="ad_space">PREMIUM CHARTER SERVICES</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 pt-12 border-t border-gray-100">
+                        <h3 class="text-center text-sm font-bold uppercase tracking-[0.2em] text-gray-400 mb-10">قصص ذات صلة</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            ${articles.filter(a => a.id !== id).slice(0,3).map(a => `
+                                <div class="cursor-pointer group" onclick="openArticle(${a.id})">
+                                    <div class="h-40 overflow-hidden mb-3 rounded-lg shadow-sm"><img src="${a.image}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"></div>
+                                    <h4 class="text-center font-bold text-sm text-slate-800 group-hover:text-bc-orange transition line-clamp-2">${currentLang === 'ar' ? a.title_ar : (a.title_en || a.title_ar)}</h4>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-16">
+                        <button onclick="showSection('articles')" class="text-xs uppercase tracking-widest border-b border-gray-300 pb-1 hover:text-bc-orange hover:border-bc-orange transition">العودة للمقالات</button>
+                    </div>
+                </div>
+            `; 
+            window.scrollTo(0,0);
+        };
+
+        window.openYachtDetail = function(id) { 
+            const yacht = yachts.find(y => y.id === id); if (!yacht) return; 
+            document.getElementById('view-yachts').classList.add('hidden'); 
+            document.getElementById('ad-banner').classList.add('hidden'); 
+            document.getElementById('view-yacht-detail').classList.remove('hidden'); 
+            const container = document.getElementById('yacht-detail-container'); 
+            const t = translations[currentLang]; 
+            const curConfig = exchangeRates[currentCurrencyCode]; 
+            const weeklyPrice = Math.round(yacht.priceWeek * curConfig.rate).toLocaleString('en-US'); 
+            const dailyPrice = Math.round(yacht.priceDay * curConfig.rate).toLocaleString('en-US'); 
+            const descText = yacht.description || translations[currentLang][yacht.descKey]; 
+            const img1 = yacht.image; 
+            const img2 = yacht.image2 || yacht.image; 
+            const img3 = yacht.image3 || yacht.image; 
+            const email = yacht.email || "info@yachtkuwait.com"; 
+            const phone = yacht.phone || "+965 1234 5678"; 
+            const aboutTitle = yacht.aboutTitle || "About this Yacht"; 
+            
+            container.innerHTML = `
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 h-[500px] mb-8">
+                <div class="lg:col-span-2 h-full overflow-hidden relative group rounded-xl shadow-md">
+                    <img id="main-yacht-image" src="${img1}" class="w-full h-full object-cover cursor-pointer">
+                    <div class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded text-sm font-semibold shadow-sm"><i class="fa-regular fa-images mr-2"></i> Gallery</div>
+                </div>
+                <div class="lg:col-span-1 grid grid-rows-2 gap-3 h-full">
+                    <div class="overflow-hidden relative group cursor-pointer rounded-xl shadow-md" onclick="swapImage(this.querySelector('img'))"><img src="${img2}" class="w-full h-full object-cover hover:opacity-90 transition"></div>
+                    <div class="overflow-hidden relative group cursor-pointer rounded-xl shadow-md" onclick="swapImage(this.querySelector('img'))"><img src="${img3}" class="w-full h-full object-cover hover:opacity-90 transition"></div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-8">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <h1 class="text-4xl font-bold text-slate-900">${yacht.name}</h1>
+                            <span class="bg-bc-orange text-white text-[10px] px-2 py-1 rounded uppercase font-bold tracking-wider">${t['filter_' + yacht.type.toLowerCase().replace(' ','')] || yacht.type}</span>
+                        </div>
+                        <p class="text-slate-500 font-medium text-sm flex items-center gap-3">
+                            <span>${yacht.lengthFt}' / ${yacht.lengthM}m</span> <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                            <span>${yacht.brand}</span> <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                            <span>${yacht.year}</span>
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-y-6 gap-x-12 border-y border-gray-100 py-8">
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-users text-bc-orange text-2xl"></i><div><p class="text-[10px] text-gray-400 uppercase font-bold">${t.spec_cruise}</p><p class="font-bold text-slate-800 text-lg">${yacht.guestsDay}</p></div></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-bed text-bc-orange text-2xl"></i><div><p class="text-[10px] text-gray-400 uppercase font-bold">${t.spec_sleep}</p><p class="font-bold text-slate-800 text-lg">${yacht.guestsSleep}</p></div></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-door-closed text-bc-orange text-2xl"></i><div><p class="text-[10px] text-gray-400 uppercase font-bold">${t.spec_cabins}</p><p class="font-bold text-slate-800 text-lg">${yacht.cabins}</p></div></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-users-gear text-bc-orange text-2xl"></i><div><p class="text-[10px] text-gray-400 uppercase font-bold">${t.spec_crew}</p><p class="font-bold text-slate-800 text-lg">${yacht.crew}</p></div></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-gauge-high text-bc-orange text-2xl"></i><div><p class="text-[10px] text-gray-400 uppercase font-bold">${t.spec_speed}</p><p class="font-bold text-slate-800 text-lg">${yacht.speed}</p></div></div>
+                    </div>
+                    <div class="prose prose-slate max-w-none">
+                        <h3 class="text-2xl font-serif text-slate-800 mb-4">${aboutTitle}</h3>
+                        <p class="text-slate-600 leading-loose text-lg">${descText}</p>
+                    </div>
+                </div>
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-lg sticky top-24">
+                        <h3 class="font-bold text-xl text-slate-900 mb-6 border-b pb-4">${t.broker_title}</h3>
+                        <div class="mb-6">
+                            <p class="text-[10px] font-bold text-gray-400 uppercase mb-1">${t.day_rate}</p>
+                            <p class="text-3xl font-bold text-bc-orange">${dailyPrice} ${curConfig.symbol}</p>
+                        </div>
+                        <div class="space-y-3">
+                            <a href="https://wa.me/${phone.replace(/[^0-9]/g,'')}" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition shadow-md"><i class="fa-brands fa-whatsapp text-xl"></i><span>${t.contact_whatsapp}: ${phone}</span></a>
+                            <a href="mailto:${email}" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition shadow-md"><i class="fa-regular fa-envelope text-xl"></i><span>${email}</span></a>
+                        </div>
+                        <p class="text-xs text-center text-gray-400 mt-4">Free cancellation up to 48 hours before charter.</p>
+                    </div>
+                </div>
+            </div>`; 
+            window.scrollTo(0,0);
+        };
+
+        window.swapImage = function(imgElement) { const mainImg = document.getElementById('main-yacht-image'); if(mainImg) mainImg.src = imgElement.src; };
+        
+        window.switchAdminTab = function(tab) { 
+            document.querySelectorAll('.admin-tab').forEach(el => el.classList.add('hidden')); 
+            document.getElementById(`admin-tab-${tab}`).classList.remove('hidden'); 
+            ['general', 'yachts', 'articles'].forEach(t => { 
+                const btn = document.getElementById(`btn-admin-${t}`); 
+                if(t === tab) { 
+                    btn.classList.add('bg-bc-orange', 'text-white', 'shadow-md'); 
+                    btn.classList.remove('hover:bg-gray-50', 'text-slate-800');
+                } else { 
+                    btn.classList.remove('bg-bc-orange', 'text-white', 'shadow-md'); 
+                    btn.classList.add('hover:bg-gray-50', 'text-slate-800');
+                } 
+            }); 
+        };
+        
+        window.closeAdminModal = function(type) { document.getElementById(`admin-${type}-modal`).classList.add('hidden'); };
+        
+        window.renderAdminYachts = function() { 
+            const list = document.getElementById('admin-yachts-list'); 
+            list.innerHTML = ''; 
+            yachts.forEach(y => { 
+                list.innerHTML += `<div class="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-lg hover:shadow-md transition"><div class="flex items-center gap-4"><img src="${y.image}" class="w-16 h-12 object-cover rounded-md shadow-sm border border-gray-100"><div><p class="font-bold text-slate-800">${y.name}</p><p class="text-xs text-gray-500 font-mono">${y.priceDay.toLocaleString()} KD/Day</p></div></div><button onclick="editYacht(${y.id})" class="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition"><i class="fa-regular fa-pen-to-square ml-1"></i> تعديل</button></div>`; 
+            }); 
+        };
+        
+        window.showAddYachtForm = function() { document.getElementById('modal-yacht-id').value = 'new'; document.getElementById('modal-yacht-name').value = ''; document.getElementById('modal-yacht-brand').value = ''; document.getElementById('modal-yacht-price').value = ''; document.getElementById('modal-yacht-image').value = ''; document.getElementById('modal-yacht-image2').value = ''; document.getElementById('modal-yacht-image3').value = ''; document.getElementById('modal-yacht-badge').value = ''; document.getElementById('modal-yacht-guests-day').value = ''; document.getElementById('modal-yacht-guests-sleep').value = ''; document.getElementById('modal-yacht-cabins').value = ''; document.getElementById('modal-yacht-crew').value = ''; document.getElementById('modal-yacht-speed').value = ''; document.getElementById('modal-yacht-email').value = ''; document.getElementById('modal-yacht-phone').value = ''; document.getElementById('modal-yacht-desc').value = ''; document.getElementById('modal-yacht-about-title').value = ''; document.getElementById('admin-yacht-modal').classList.remove('hidden'); };
+        
+        window.editYacht = function(id) { const y = yachts.find(x => x.id === id); document.getElementById('modal-yacht-id').value = y.id; document.getElementById('modal-yacht-name').value = y.name; document.getElementById('modal-yacht-brand').value = y.brand; document.getElementById('modal-yacht-price').value = y.priceDay; document.getElementById('modal-yacht-image').value = y.image; document.getElementById('modal-yacht-image2').value = y.image2 || ""; document.getElementById('modal-yacht-image3').value = y.image3 || ""; document.getElementById('modal-yacht-badge').value = y.badgeKey || ""; document.getElementById('modal-yacht-guests-day').value = y.guestsDay; document.getElementById('modal-yacht-guests-sleep').value = y.guestsSleep; document.getElementById('modal-yacht-cabins').value = y.cabins; document.getElementById('modal-yacht-crew').value = y.crew; document.getElementById('modal-yacht-speed').value = y.speed; document.getElementById('modal-yacht-email').value = y.email || ""; document.getElementById('modal-yacht-phone').value = y.phone || ""; document.getElementById('modal-yacht-desc').value = y.description || ""; document.getElementById('modal-yacht-about-title').value = y.aboutTitle || ""; document.getElementById('admin-yacht-modal').classList.remove('hidden'); };
+        
+        window.saveYachtModal = function() { 
+            const idVal = document.getElementById('modal-yacht-id').value; 
+            const name = document.getElementById('modal-yacht-name').value; 
+            const brand = document.getElementById('modal-yacht-brand').value; 
+            const price = parseInt(document.getElementById('modal-yacht-price').value); 
+            const image = document.getElementById('modal-yacht-image').value; 
+            const image2 = document.getElementById('modal-yacht-image2').value; 
+            const image3 = document.getElementById('modal-yacht-image3').value; 
+            const badge = document.getElementById('modal-yacht-badge').value || null; 
+            const gDay = parseInt(document.getElementById('modal-yacht-guests-day').value) || 0; 
+            const gSleep = parseInt(document.getElementById('modal-yacht-guests-sleep').value) || 0; 
+            const cabins = parseInt(document.getElementById('modal-yacht-cabins').value) || 0; 
+            const crew = parseInt(document.getElementById('modal-yacht-crew').value) || 0; 
+            const speed = document.getElementById('modal-yacht-speed').value || ""; 
+            const email = document.getElementById('modal-yacht-email').value; 
+            const phone = document.getElementById('modal-yacht-phone').value; 
+            const desc = document.getElementById('modal-yacht-desc').value; 
+            const aboutTitle = document.getElementById('modal-yacht-about-title').value; 
+            
+            if (idVal === 'new') { 
+                const newId = yachts.length > 0 ? Math.max(...yachts.map(y => y.id)) + 1 : 1; 
+                yachts.push({ id: newId, name: name, brand: brand, priceDay: price || 0, priceWeek: (price || 0) * 7, image: image, image2: image2, image3: image3, badgeKey: badge, type: "Superyacht", guestsDay: gDay, guestsSleep: gSleep, cabins: cabins, crew: crew, lengthFt: 100, lengthM: 30, year: 2024, speed: speed, beds: "Variable", descKey: "desc_super", email: email, phone: phone, description: desc, aboutTitle: aboutTitle }); 
+            } else { 
+                const y = yachts.find(x => x.id == idVal); 
+                if(y) { y.name = name; y.brand = brand; y.priceDay = price; y.image = image; y.image2 = image2; y.image3 = image3; y.badgeKey = badge; y.guestsDay = gDay; y.guestsSleep = gSleep; y.cabins = cabins; y.crew = crew; y.speed = speed; y.email = email; y.phone = phone; y.description = desc; y.aboutTitle = aboutTitle; } 
+            } 
+            closeAdminModal('yacht'); renderAdminYachts(); applyFilters(); 
+        };
+        
+        window.renderAdminArticles = function() { 
+            const list = document.getElementById('admin-articles-list'); 
+            list.innerHTML = ''; 
+            articles.forEach(a => { 
+                list.innerHTML += `<div class="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-lg hover:shadow-md transition"><div class="flex items-center gap-4"><img src="${a.image}" class="w-16 h-12 object-cover rounded-md shadow-sm border border-gray-100"><p class="font-bold text-slate-800 text-sm line-clamp-1 w-64">${a.title_ar}</p></div><button onclick="editArticle(${a.id})" class="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition"><i class="fa-regular fa-pen-to-square ml-1"></i> تعديل</button></div>`; 
+            }); 
+        };
+        
+        window.showAddArticleForm = function() { document.getElementById('modal-article-id').value = 'new'; document.getElementById('modal-article-title-ar').value = ''; document.getElementById('modal-article-title-en').value = ''; document.getElementById('modal-article-subtitle-ar').value = ''; document.getElementById('modal-article-subtitle-en').value = ''; document.getElementById('modal-article-image').value = ''; document.getElementById('modal-article-meta').value = ''; document.getElementById('modal-article-content-ar').value = ''; document.getElementById('modal-article-content-en').value = ''; document.getElementById('modal-article-title').innerText = 'إضافة مقال جديد'; document.getElementById('admin-article-modal').classList.remove('hidden'); };
+        
+        window.editArticle = function(id) { const a = articles.find(x => x.id === id); document.getElementById('modal-article-id').value = a.id; document.getElementById('modal-article-title-ar').value = a.title_ar; document.getElementById('modal-article-title-en').value = a.title_en; document.getElementById('modal-article-subtitle-ar').value = a.subtitle_ar || ''; document.getElementById('modal-article-subtitle-en').value = a.subtitle_en || ''; document.getElementById('modal-article-image').value = a.image; document.getElementById('modal-article-meta').value = a.meta || ''; document.getElementById('modal-article-content-ar').value = a.content_ar; document.getElementById('modal-article-content-en').value = a.content_en; document.getElementById('modal-article-title').innerText = 'تعديل المقال'; document.getElementById('admin-article-modal').classList.remove('hidden'); };
+        
+        window.saveArticleModal = function() { 
+            const idVal = document.getElementById('modal-article-id').value; 
+            const newTitleAr = document.getElementById('modal-article-title-ar').value; 
+            const newTitleEn = document.getElementById('modal-article-title-en').value; 
+            const newSubtitleAr = document.getElementById('modal-article-subtitle-ar').value; 
+            const newSubtitleEn = document.getElementById('modal-article-subtitle-en').value; 
+            const newImg = document.getElementById('modal-article-image').value; 
+            const newMeta = document.getElementById('modal-article-meta').value; 
+            const newContentAr = document.getElementById('modal-article-content-ar').value; 
+            const newContentEn = document.getElementById('modal-article-content-en').value; 
+            
+            if (idVal === 'new') { 
+                const newId = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1; 
+                articles.push({ id: newId, title_ar: newTitleAr, title_en: newTitleEn, subtitle_ar: newSubtitleAr, subtitle_en: newSubtitleEn, image: newImg, meta: newMeta, content_ar: newContentAr, content_en: newContentEn }); 
+            } else { 
+                const a = articles.find(x => x.id == idVal); 
+                if(a) { a.title_ar = newTitleAr; a.title_en = newTitleEn; a.subtitle_ar = newSubtitleAr; a.subtitle_en = newSubtitleEn; a.image = newImg; a.meta = newMeta; a.content_ar = newContentAr; a.content_en = newContentEn; } 
+            } 
+            closeAdminModal('article'); renderAdminArticles(); if(!document.getElementById('view-articles-list').classList.contains('hidden')) renderArticlesList(); 
+        };
+
+        window.setLanguage = function(lang) {
+            currentLang = lang; 
+            document.documentElement.setAttribute('lang', lang); 
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.body.className = lang === 'ar' ? 'text-slate-800 transition-all duration-300 lang-ar relative min-h-screen flex flex-col' : 'text-slate-800 transition-all duration-300 relative min-h-screen flex flex-col';
+            const langDisplay = document.getElementById('current-lang-display');
+            if (langDisplay) langDisplay.innerText = lang === 'ar' ? 'العربية' : 'English';
+            renderTranslations(); applyFilters(); 
+            if (!document.getElementById('view-articles-list').classList.contains('hidden')) renderArticlesList();
+            if (!document.getElementById('view-yacht-detail').classList.contains('hidden')) {
+                 // Re-render detail if open to update labels
+                 const visibleYacht = yachts.find(y => document.getElementById('yacht-detail-container').innerHTML.includes(y.name));
+                 if(visibleYacht) openYachtDetail(visibleYacht.id);
+            }
+        };
+
+        window.renderTranslations = function() { document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (translations[currentLang][key]) el.innerText = translations[currentLang][key]; }); };
+        
+        window.setCurrency = function(code) {
+            currentCurrencyCode = code; const symbol = exchangeRates[code].symbol;
+            const currDisplay = document.getElementById('current-currency-display');
+            if (currDisplay) currDisplay.innerText = `${symbol} (${code})`;
+            applyFilters();
+             if (!document.getElementById('view-yacht-detail').classList.contains('hidden')) {
+                 const visibleYacht = yachts.find(y => document.getElementById('yacht-detail-container').innerHTML.includes(y.name));
+                 if(visibleYacht) openYachtDetail(visibleYacht.id);
+            }
+        };
+
+        window.setPriceType = function(type) { 
+            currentPriceType = type; 
+            const activeClass = 'flex-1 py-1.5 text-sm font-bold rounded-md bg-white text-bc-orange shadow-sm transition'; 
+            const inactiveClass = 'flex-1 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 transition'; 
+            document.getElementById('price-day').className = type === 'day' ? activeClass : inactiveClass; 
+            document.getElementById('price-week').className = type === 'week' ? activeClass : inactiveClass; 
+            applyFilters(); 
+        };
+
+        window.updateCounter = function(key, change) { let stateKey = key === 'guests-day' ? 'guestsDay' : 'guestsSleep'; if (filterState[stateKey] + change >= 0) { filterState[stateKey] += change; document.getElementById(`${key}-val`).innerText = filterState[stateKey]; applyFilters(); } };
+        
+        window.resetFilters = function() { document.querySelectorAll('.custom-checkbox').forEach(cb => cb.checked = true); filterState.guestsDay = 0; filterState.guestsSleep = 0; document.getElementById('guests-day-val').innerText = '0'; document.getElementById('guests-sleep-val').innerText = '0'; document.getElementById('sort-select').value = 'featured'; document.getElementById('location-search').value = 'Kuwait'; applyFilters(); };
+        
+        window.applyFilters = function() { 
+            const checkedTypes = Array.from(document.querySelectorAll('#boat-type-filters input:checked')).map(cb => cb.value); 
+            const sortVal = document.getElementById('sort-select').value; 
+            let filtered = yachts.filter(yacht => { 
+                if (checkedTypes.length > 0 && !checkedTypes.includes(yacht.type)) return false; 
+                if (yacht.guestsDay < filterState.guestsDay) return false; 
+                if (yacht.guestsSleep < filterState.guestsSleep) return false; 
+                return true; 
+            }); 
+            const rate = exchangeRates[currentCurrencyCode].rate; 
+            filtered.forEach(y => { y.currentPrice = (currentPriceType === 'day' ? y.priceDay : y.priceWeek) * rate; }); 
+            if (sortVal === 'price_low') filtered.sort((a, b) => a.currentPrice - b.currentPrice); 
+            else if (sortVal === 'price_high') filtered.sort((a, b) => b.currentPrice - a.currentPrice); 
+            else if (sortVal === 'newest') filtered.sort((a, b) => b.year - a.year); 
+            renderYachts(filtered); 
+        };
+
+        window.renderYachts = function(data) { 
+            const grid = document.getElementById('yacht-grid'); 
+            const noRes = document.getElementById('no-results'); 
+            grid.innerHTML = ''; 
+            if (data.length === 0) { 
+                noRes.classList.remove('hidden'); 
+            } else { 
+                noRes.classList.add('hidden'); 
+                const curConfig = exchangeRates[currentCurrencyCode]; 
+                data.forEach(yacht => { 
+                    const basePrice = currentPriceType === 'day' ? yacht.priceDay : yacht.priceWeek; 
+                    const finalPrice = Math.round(basePrice * curConfig.rate).toLocaleString('en-US'); 
+                    const labelPrice = currentPriceType === 'day' ? translations[currentLang]['label_day'] : translations[currentLang]['label_week']; 
+                    const badgeText = yacht.badgeKey ? translations[currentLang][yacht.badgeKey] : ''; 
+                    const descText = translations[currentLang][yacht.descKey] || yacht.description; 
+                    const badgeHtml = badgeText ? `<div class="absolute top-3 left-3 bg-bc-orange text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm z-10 tracking-wider uppercase">${badgeText}</div>` : ''; 
+                    grid.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 group overflow-hidden flex flex-col animate-fadeIn cursor-pointer border border-gray-100" onclick="openYachtDetail(${yacht.id})">
+                        <div class="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                            <img src="${yacht.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            ${badgeHtml}
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <p class="text-white text-xs font-medium"><i class="fa-solid fa-location-dot mr-1 text-bc-orange"></i> Kuwait City</p>
+                            </div>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-slate-900 text-lg group-hover:text-bc-orange transition line-clamp-1">${yacht.name}</h3>
+                                <div class="text-right">
+                                    <span class="block text-bc-orange font-bold text-lg leading-none">${finalPrice} <span class="text-xs">${curConfig.symbol}</span></span>
+                                    <span class="text-gray-400 text-[10px] font-normal uppercase">${labelPrice}</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">${descText}</p>
+                            <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between text-slate-600 text-xs font-medium">
+                                <div class="flex items-center gap-1.5" title="Guests (Day)"><i class="fa-regular fa-user text-gray-400"></i> <span>${yacht.guestsDay}</span></div>
+                                <div class="flex items-center gap-1.5" title="Sleeps"><i class="fa-solid fa-bed text-gray-400"></i> <span>${yacht.guestsSleep}</span></div>
+                                <div class="flex items-center gap-1.5" title="Cabins"><i class="fa-solid fa-door-closed text-gray-400"></i> <span>${yacht.cabins}</span></div>
+                                <div class="flex items-center gap-1.5" title="Length"><i class="fa-solid fa-ruler-horizontal text-gray-400"></i> <span>${yacht.lengthFt}'</span></div>
+                            </div>
+                        </div>
+                    </div>`; 
+                }); 
+            } 
+        };
+
+        document.addEventListener('DOMContentLoaded', () => { 
+            setLanguage('ar'); 
+            setCurrency('KWD');
+            switchAdminTab('articles'); // Default admin tab
+        });
+    </script>
 </body>
 </html>
